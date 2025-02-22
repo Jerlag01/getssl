@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+if [ -z "$1" ]; then
+  arg="restart"
+else
+  arg=$1
+fi
+
+if [ "$GETSSL_OS" = "alpine" ]; then
+    # Switch to supervisorctl as killall -HUP won't change the listen port
+    supervisorctl restart vsftpd:
+elif [[ "$GETSSL_OS" == "centos"[78] || "$GETSSL_OS" == "rockylinux"* ]]; then
+    # Hard restart the service as using -HUP won't change the listening port
+    if pgrep vsftpd; then
+      pgrep vsftpd | head -1 | xargs kill
+      vsftpd 3>&- 4>&-
+    fi
+elif [[ "$GETSSL_OS" == "centos6" ]]; then
+    service vsftpd "$arg" 3>&- 4>&-
+else
+    service vsftpd restart >/dev/null 3>&- 4>&-
+fi

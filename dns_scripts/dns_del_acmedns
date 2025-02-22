@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+# This script aims to delete a token to acme-dns DNS for the ACME challenge
+# However, for now, acme-dns does not provide a delete API service.
+# Its strategy is to update an existing record.
+# So this call isn't relevant and must be neutral.
+
+# usage dns_del_acmedns "domain name" "token"
+# return codes are;
+# 0 - success
+# 1 - error returned from server
+
+fulldomain="${1}"
+token="${2}"
+
+# Check initial parameters
+if [[ -z "$fulldomain" ]]; then
+  echo "DNS script requires full domain name as first parameter"
+  exit 1
+fi
+if [[ -z "$token" ]]; then
+  echo "DNS script requires challenge token as second parameter"
+  exit 1
+fi
+
+# nothing to do
+
+exit 0

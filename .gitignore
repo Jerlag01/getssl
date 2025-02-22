@@ -1,0 +1,12 @@
+*~
+*#
+*.swp
+*.tmp
+*.bak
+*.tdy
+*.tar.gz
+*.orig
+JSON.sh
+.vscode/settings.json
+push.json
+bin/
